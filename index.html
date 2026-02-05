@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barbería Jahaziel - Sistema Modular</title>
+    <title>Barbería Jahaziel - Sistema de Gestión</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- NAVEGACIÓN PRINCIPAL -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand" href="#" onclick="app.views.show('home')">
@@ -20,40 +23,81 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#" onclick="app.views.show('home')">Cliente</a></li>
-                    <li class="nav-item"><a class="nav-link text-warning" href="#" onclick="app.views.show('login')">Admin</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="app.views.show('home')">
+                            <i class="bi bi-house"></i> Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-warning" href="#" onclick="app.views.show('login')">
+                            <i class="bi bi-shield-lock"></i> Admin
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- VISTA 1: HOME - RESERVA DE CLIENTES -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
     <div id="view-home" class="container section-view active-view">
         <div class="row justify-content-center">
-            <div class="col-md-8 text-center mb-4">
-                <h1 class="display-5 fw-bold mt-4">Barbería Jahaziel</h1>
-                <p class="lead text-muted">Barrio Obrero Independiente, Quito</p>
+            <div class="col-md-8 text-center mb-4 mt-4">
+                <h1 class="display-5 fw-bold">Barbería Jahaziel</h1>
+                <p class="lead text-muted">
+                    <i class="bi bi-geo-alt"></i> Barrio Obrero Independiente, Quito
+                </p>
+                <p class="text-muted">
+                    <i class="bi bi-clock"></i> Horario: Lunes a Sábado 8:00 AM - 8:00 PM
+                </p>
             </div>
             
-            <div class="col-md-6">
-                <div class="card card-custom shadow p-4">
-                    <h3 class="mb-3 border-bottom pb-2"><i class="bi bi-calendar-check"></i> Reservar Turno</h3>
+            <div class="col-md-7 col-lg-6">
+                <div class="card card-custom shadow-lg p-4">
+                    <h3 class="mb-4 border-bottom pb-3">
+                        <i class="bi bi-calendar-check text-warning"></i> Reservar Turno
+                    </h3>
                     <form onsubmit="app.booking.submit(event)">
                         <div class="mb-3">
-                            <label class="form-label">Nombre del Cliente</label>
-                            <input type="text" id="clientName" class="form-control" required placeholder="Ej. Jahaziel Cepeda">
+                            <label class="form-label fw-bold">
+                                <i class="bi bi-person"></i> Nombre del Cliente
+                            </label>
+                            <input type="text" 
+                                   id="clientName" 
+                                   class="form-control form-control-lg" 
+                                   required 
+                                   placeholder="Ej. Juan Pérez"
+                                   minlength="3">
                         </div>
+
                         <div class="mb-3">
-                            <label class="form-label">Servicio</label>
-                            <select id="serviceSelect" class="form-select" onchange="app.booking.updatePrice()">
-                                </select>
+                            <label class="form-label fw-bold">
+                                <i class="bi bi-scissors"></i> Servicio
+                            </label>
+                            <select id="serviceSelect" 
+                                    class="form-select form-select-lg" 
+                                    onchange="app.booking.updatePrice()">
+                            </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Fecha y Hora</label>
-                            <input type="datetime-local" id="appDate" class="form-control" required>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="bi bi-calendar3"></i> Fecha y Hora
+                            </label>
+                            <input type="datetime-local" 
+                                   id="appDate" 
+                                   class="form-control form-control-lg" 
+                                   required>
+                            <small class="text-muted">
+                                <i class="bi bi-info-circle"></i> Horario de atención: 8:00 AM - 8:00 PM
+                            </small>
                         </div>
+
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-dark btn-lg">
-                                Confirmar Reserva (<span id="priceDisplay">$0.00</span>)
+                            <button type="submit" class="btn btn-dark btn-lg shadow-sm">
+                                <i class="bi bi-check-circle"></i> Confirmar Reserva 
+                                (<span id="priceDisplay">$0.00</span>)
                             </button>
                         </div>
                     </form>
@@ -62,66 +106,140 @@
         </div>
     </div>
 
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- VISTA 2: LOGIN ADMINISTRADOR -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
     <div id="view-login" class="container section-view">
         <div class="row justify-content-center mt-5">
-            <div class="col-md-4">
-                <div class="card card-custom shadow p-4 text-center">
-                    <i class="bi bi-shield-lock display-4 mb-3 text-warning"></i>
-                    <h3>Acceso Dueño</h3>
-                    <input type="password" id="adminPass" class="form-control mb-3" placeholder="Contraseña (1234)">
-                    <button class="btn btn-warning w-100" onclick="app.auth.login()">Ingresar</button>
-                    <button class="btn btn-link mt-2" onclick="app.views.show('home')">Volver</button>
+            <div class="col-md-5 col-lg-4">
+                <div class="card card-custom shadow-lg p-4 text-center">
+                    <i class="bi bi-shield-lock display-3 mb-3 text-warning"></i>
+                    <h3 class="mb-4">Acceso Administrador</h3>
+                    <div class="mb-3">
+                        <input type="password" 
+                               id="adminPass" 
+                               class="form-control form-control-lg text-center" 
+                               placeholder="Contraseña"
+                               onkeypress="if(event.key==='Enter') app.auth.login()">
+                    </div>
+                    <button class="btn btn-warning btn-lg w-100 mb-2" onclick="app.auth.login()">
+                        <i class="bi bi-box-arrow-in-right"></i> Ingresar
+                    </button>
+                    <button class="btn btn-link" onclick="app.views.show('home')">
+                        <i class="bi bi-arrow-left"></i> Volver al Inicio
+                    </button>
+                    <hr>
+                    <small class="text-muted">
+                        <i class="bi bi-info-circle"></i> Contraseña por defecto: <code>1234</code>
+                    </small>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- VISTA 3: PANEL ADMINISTRATIVO -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
     <div id="view-admin" class="container section-view">
-        <div class="d-flex justify-content-between align-items-center mb-4 mt-3">
-            <h2><i class="bi bi-speedometer2"></i> Panel Min-Min</h2>
-            <button class="btn btn-outline-danger btn-sm" onclick="app.auth.logout()">Salir</button>
+        <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+            <h2>
+                <i class="bi bi-speedometer2 text-warning"></i> Panel de Control MIN-MIN
+            </h2>
+            <button class="btn btn-outline-danger" onclick="app.auth.logout()">
+                <i class="bi bi-box-arrow-right"></i> Salir
+            </button>
         </div>
 
+        <!-- Tarjetas de Estadísticas -->
         <div class="row mb-4">
-            <div class="col-md-6 mb-3">
-                <div class="card card-custom bg-gradient-gold p-3">
-                    <h5><i class="bi bi-cash-coin"></i> Caja del Día</h5>
-                    <h1 class="display-4 fw-bold" id="totalCash">$0.00</h1>
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="card card-custom bg-gradient-gold p-4 shadow">
+                    <h5 class="mb-2">
+                        <i class="bi bi-cash-coin"></i> Caja del Día
+                    </h5>
+                    <h1 class="display-4 fw-bold mb-0" id="totalCash">$0.00</h1>
                 </div>
             </div>
-            <div class="col-md-6 mb-3">
-                <div class="card card-custom bg-gradient-dark p-3">
-                    <h5><i class="bi bi-people"></i> Citas Pendientes</h5>
-                    <h1 class="display-4 fw-bold" id="pendingCount">0</h1>
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="card card-custom bg-gradient-dark p-4 shadow">
+                    <h5 class="mb-2">
+                        <i class="bi bi-people"></i> Citas Pendientes
+                    </h5>
+                    <h1 class="display-4 fw-bold mb-0" id="pendingCount">0</h1>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-4 mb-3">
+                <div class="card card-custom bg-gradient-blue p-4 shadow">
+                    <h5 class="mb-2">
+                        <i class="bi bi-gear"></i> Gestión
+                    </h5>
+                    <button class="btn btn-light btn-lg w-100" onclick="app.views.show('services')">
+                        <i class="bi bi-scissors"></i> Administrar Servicios
+                    </button>
                 </div>
             </div>
         </div>
 
+        <!-- Tabla de Citas -->
         <div class="card card-custom shadow">
             <div class="card-header bg-white py-3">
-                <h5 class="mb-0"><i class="bi bi-list-check"></i> Control de Citas y Pagos</h5>
+                <h5 class="mb-0">
+                    <i class="bi bi-list-check"></i> Control de Citas y Pagos
+                </h5>
             </div>
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th>Hora</th>
-                            <th>Cliente</th>
-                            <th>Servicio</th>
-                            <th>Precio</th>
-                            <th>Estado</th>
-                            <th>Acción</th>
+                            <th><i class="bi bi-calendar"></i> Fecha/Hora</th>
+                            <th><i class="bi bi-person"></i> Cliente</th>
+                            <th><i class="bi bi-scissors"></i> Servicio</th>
+                            <th><i class="bi bi-cash"></i> Precio</th>
+                            <th><i class="bi bi-info-circle"></i> Estado</th>
+                            <th><i class="bi bi-tools"></i> Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="appointmentsTable"></tbody>
+                    <tbody id="appointmentsTable">
+                        <!-- Se llena dinámicamente -->
+                    </tbody>
                 </table>
             </div>
         </div>
-        <div class="text-center mt-3">
-             <button class="btn btn-sm btn-outline-secondary" onclick="app.data.reset()">Reiniciar Base de Datos (Demo)</button>
+
+        <!-- Botones de Administración -->
+        <div class="text-center mt-4">
+            <button class="btn btn-sm btn-outline-secondary" onclick="app.data.reset()">
+                <i class="bi bi-arrow-clockwise"></i> Reiniciar Base de Datos (Demo)
+            </button>
         </div>
     </div>
 
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- VISTA 4: GESTIÓN DE SERVICIOS -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div id="view-services" class="container section-view">
+        <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+            <h2>
+                <i class="bi bi-scissors text-warning"></i> Gestión de Servicios
+            </h2>
+            <div>
+                <button class="btn btn-success me-2" onclick="app.services.add()">
+                    <i class="bi bi-plus-circle"></i> Nuevo Servicio
+                </button>
+                <button class="btn btn-outline-secondary" onclick="app.views.show('admin')">
+                    <i class="bi bi-arrow-left"></i> Volver
+                </button>
+            </div>
+        </div>
+
+        <div id="servicesTable">
+            <!-- Se llena dinámicamente -->
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- SCRIPTS -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
