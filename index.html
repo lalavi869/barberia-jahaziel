@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbería Jahaziel - Sistema Modular</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="app.views.show('home')">
+                <i class="bi bi-scissors"></i> Barbería Jahaziel
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="app.views.show('home')">Cliente</a></li>
+                    <li class="nav-item"><a class="nav-link text-warning" href="#" onclick="app.views.show('login')">Admin</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="view-home" class="container section-view active-view">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center mb-4">
+                <h1 class="display-5 fw-bold mt-4">Barbería Jahaziel</h1>
+                <p class="lead text-muted">Barrio Obrero Independiente, Quito</p>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card card-custom shadow p-4">
+                    <h3 class="mb-3 border-bottom pb-2"><i class="bi bi-calendar-check"></i> Reservar Turno</h3>
+                    <form onsubmit="app.booking.submit(event)">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre del Cliente</label>
+                            <input type="text" id="clientName" class="form-control" required placeholder="Ej. Jahaziel Cepeda">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Servicio</label>
+                            <select id="serviceSelect" class="form-select" onchange="app.booking.updatePrice()">
+                                </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha y Hora</label>
+                            <input type="datetime-local" id="appDate" class="form-control" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-dark btn-lg">
+                                Confirmar Reserva (<span id="priceDisplay">$0.00</span>)
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-login" class="container section-view">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-4">
+                <div class="card card-custom shadow p-4 text-center">
+                    <i class="bi bi-shield-lock display-4 mb-3 text-warning"></i>
+                    <h3>Acceso Dueño</h3>
+                    <input type="password" id="adminPass" class="form-control mb-3" placeholder="Contraseña (1234)">
+                    <button class="btn btn-warning w-100" onclick="app.auth.login()">Ingresar</button>
+                    <button class="btn btn-link mt-2" onclick="app.views.show('home')">Volver</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-admin" class="container section-view">
+        <div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+            <h2><i class="bi bi-speedometer2"></i> Panel Min-Min</h2>
+            <button class="btn btn-outline-danger btn-sm" onclick="app.auth.logout()">Salir</button>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3">
+                <div class="card card-custom bg-gradient-gold p-3">
+                    <h5><i class="bi bi-cash-coin"></i> Caja del Día</h5>
+                    <h1 class="display-4 fw-bold" id="totalCash">$0.00</h1>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card card-custom bg-gradient-dark p-3">
+                    <h5><i class="bi bi-people"></i> Citas Pendientes</h5>
+                    <h1 class="display-4 fw-bold" id="pendingCount">0</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-custom shadow">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0"><i class="bi bi-list-check"></i> Control de Citas y Pagos</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Hora</th>
+                            <th>Cliente</th>
+                            <th>Servicio</th>
+                            <th>Precio</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointmentsTable"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+             <button class="btn btn-sm btn-outline-secondary" onclick="app.data.reset()">Reiniciar Base de Datos (Demo)</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
